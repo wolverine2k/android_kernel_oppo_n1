@@ -909,7 +909,7 @@ long arch_ptrace(struct task_struct *child, long request,
 
 asmlinkage int syscall_trace(int why, struct pt_regs *regs, int scno)
 {
-	unsigned long ip;
+	unsigned long ip = 0;
 
 	if (why)
 		audit_syscall_exit(regs);
@@ -925,13 +925,6 @@ asmlinkage int syscall_trace(int why, struct pt_regs *regs, int scno)
 		return scno;
 
 	current_thread_info()->syscall = scno;
-
-	/*
-	 * IP is used to denote syscall entry/exit:
-	 * IP = 0 -> entry, =1 -> exit
-	 */
-	ip = regs->ARM_ip;
-	regs->ARM_ip = why;
 
 	/* the 0x80 provides a way for the tracing parent to distinguish
 	   between a syscall stop and SIGTRAP delivery */
