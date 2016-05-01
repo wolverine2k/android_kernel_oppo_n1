@@ -242,7 +242,6 @@ static int32_t msm_actuator_move_focus(
 	int16_t dest_step_pos = move_params->dest_step_pos;
 	uint16_t curr_lens_pos = 0;
 	int dir = move_params->dir;
-#ifdef CONFIG_MSM_CAMERA_DEBUG
 	int32_t num_steps = move_params->num_steps;
 	struct damping_params_t ringing_params_kernel;
 
@@ -252,7 +251,7 @@ static int32_t msm_actuator_move_focus(
 			pr_err("copy_from_user failed\n");
 			return -EFAULT;
 	}
-
+#ifdef CONFIG_MSM_CAMERA_DEBUG
 	CDBG("%s called, dir %d, num_steps %d\n",
 		__func__,
 		dir,
